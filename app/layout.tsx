@@ -1,4 +1,6 @@
-import "./globals.css";
+export const metadata = {
+  title: "TreatTrack Pro",
+};
 
 export default function RootLayout({
   children,
