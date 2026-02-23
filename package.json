@@ -1,27 +1,2 @@
-{
-  "name": "my-saas-app",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "prisma generate && next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "next": "latest",
-    "react": "latest",
-    "react-dom": "latest",
-    "@prisma/client": "latest",
-    "lucide-react": "latest"
-  },
-  "devDependencies": {
-    "prisma": "latest",
-    "typescript": "latest",
-    "@types/node": "latest",
-    "@types/react": "latest",
-    "@types/react-dom": "latest",
-    "postcss": "latest",
-    "tailwindcss": "latest"
-  }
-}
+"prisma": "5.22.0",
+"@prisma/client": "5.22.0"
