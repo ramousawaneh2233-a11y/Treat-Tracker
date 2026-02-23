@@ -1,4 +1,8 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "postgresql"
-  // The 'url' line is deleted from here!
+  url      = env("DATABASE_URL")
 }
