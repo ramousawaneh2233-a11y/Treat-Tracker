@@ -15,5 +15,10 @@
     "prisma": "5.22.0",
     "next-auth": "^4.24.7",
     "bcrypt": "^5.1.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "@types/react": "^18.3.3",
+    "@types/node": "^20.11.30"
   }
 }
