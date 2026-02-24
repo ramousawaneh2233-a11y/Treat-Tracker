@@ -11,39 +11,32 @@ import {
   Home, 
   ArrowUpRight 
 } from "lucide-react";
+import ConfettiTrigger from "@/components/ConfettiTrigger";
 
 export default async function ProfessionalDashboard() {
-  // --- FINANCIAL CALCULATIONS (The "Professional" Logic) ---
-  const grossMonthly = 3500; // This will eventually come from your database
-  const pensionRate = 0.05;  // 5% pension contribution
-  
-  // UK Tax Logic (Based on 2024/25 tax year estimates)
+  // --- FINANCIAL CALCULATIONS ---
+  const grossMonthly = 3500; 
+  const pensionRate = 0.05; 
   const personalAllowanceMonthly = 1048; 
   const taxableIncome = Math.max(0, grossMonthly - personalAllowanceMonthly);
-  
-  const tax = taxableIncome * 0.20; // 20% Basic Rate
-  const ni = grossMonthly > 1048 ? (grossMonthly - 1048) * 0.08 : 0; // 8% Class 1 NI
+  const tax = taxableIncome * 0.20; 
+  const ni = grossMonthly > 1048 ? (grossMonthly - 1048) * 0.08 : 0; 
   const pension = grossMonthly * pensionRate;
-  
   const takeHomePay = grossMonthly - tax - ni - pension;
 
-  // --- REWARD LOGIC (The "Treat" System) ---
   const savingsThisMonth = 1000;
   const rewardSuggestions = [
-    { icon: <Coffee className="text-orange-500" />, text: "Get a fancy Caramel Latte", type: "Small" },
-    { icon: <Pizza className="text-red-500" />, text: "Order that extra-large Pizza tonight", type: "Small" },
-    { icon: <Heart className="text-pink-500" />, text: "Buy those flowers you liked", type: "Medium" },
-    { icon: <Plane className="text-blue-500" />, text: "Time to browse flights for a weekend away!", type: "Large" }
+    { icon: <Coffee className="text-orange-500" />, text: "Get a fancy Caramel Latte" },
+    { icon: <Plane className="text-blue-500" />, text: "Time to browse flights for a weekend away!" }
   ];
-
-  // Select a reward: If saved > £1000 show Large reward, else show Small
-  const suggestedReward = savingsThisMonth >= 1000 ? rewardSuggestions[3] : rewardSuggestions[0];
+  const suggestedReward = savingsThisMonth >= 1000 ? rewardSuggestions[1] : rewardSuggestions[0];
 
   return (
     <div className="min-h-screen bg-white text-slate-900 font-sans p-4 md:p-8">
+      <ConfettiTrigger />
       <div className="max-w-6xl mx-auto">
         
-        {/* HEADER SECTION */}
+        {/* HEADER */}
         <header className="flex justify-between items-center mb-10">
           <h1 className="text-3xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-pink-500">
             TREAT TRACKER PRO
@@ -65,7 +58,6 @@ export default async function ProfessionalDashboard() {
                 <span className="text-6xl font-black tracking-tighter">£{takeHomePay.toLocaleString(undefined, {minimumFractionDigits: 2})}</span>
                 <span className="text-slate-500 font-bold line-through text-2xl">£{grossMonthly}</span>
               </div>
-              <p className="text-slate-400 font-medium">Actual money landing in your pocket</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10 pt-10 border-t border-slate-800 relative z-10">
@@ -74,20 +66,65 @@ export default async function ProfessionalDashboard() {
                 <p className="text-pink-500 text-2xl font-black">-£{tax.toFixed(2)}</p>
               </div>
               <div>
-                <p className="text-slate-500 text-xs font-black uppercase tracking-widest mb-1">National Insurance</p>
+                <p className="text-slate-500 text-xs font-black uppercase tracking-widest mb-1">Nat. Insurance</p>
                 <p className="text-pink-500 text-2xl font-black">-£{ni.toFixed(2)}</p>
               </div>
               <div>
-                <p className="text-slate-500 text-xs font-black uppercase tracking-widest mb-1">Pension Contribution</p>
+                <p className="text-slate-500 text-xs font-black uppercase tracking-widest mb-1">Pension (5%)</p>
                 <p className="text-indigo-400 text-2xl font-black">-£{pension.toFixed(2)}</p>
               </div>
             </div>
-            {/* Background Decoration */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-600/10 blur-[100px] rounded-full"></div>
           </div>
 
-          {/* OVERTIME / QUICK ADD */}
           <div className="bg-indigo-600 rounded-[2.5rem] p-8 text-white flex flex-col justify-center items-center text-center shadow-xl shadow-indigo-100">
             <div className="bg-white/20 p-4 rounded-3xl mb-4 backdrop-blur-md">
               <Sparkles size={40} className="text-white" />
             </div>
+            <h3 className="font-black text-xl mb-2 italic">Worked Overtime?</h3>
+            <button className="w-full py-4 bg-white text-indigo-600 rounded-2xl font-black text-sm mt-4 hover:scale-105 transition-transform">
+              Add Hours
+            </button>
+          </div>
+        </section>
+
+        {/* 2. MILESTONE & MORTGAGE */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-600 rounded-[3rem] p-1 shadow-2xl">
+            <div className="bg-white rounded-[2.9rem] p-10 h-full">
+              <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center gap-2 text-pink-500 font-black uppercase tracking-tighter">
+                  <PartyPopper size={24} /> Milestone Unlocked
+                </div>
+              </div>
+              <h3 className="text-4xl font-black leading-[1.1] mb-8 text-slate-800">"Time for a treat?"</h3>
+              <div className="bg-slate-50 rounded-[2rem] p-6 border border-slate-100 flex items-center gap-6">
+                <div className="text-5xl bg-white p-5 rounded-3xl shadow-sm italic">{suggestedReward.icon}</div>
+                <div>
+                  <p className="font-black text-2xl text-slate-900 mb-1">{suggestedReward.text}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-emerald-50 rounded-[3rem] p-10 border-2 border-emerald-100 flex flex-col justify-between">
+             <div>
+                <div className="flex items-center gap-2 text-emerald-600 font-black uppercase tracking-widest text-xs mb-4">
+                  <Home size={16} /> Mortgage Goal Pot
+                </div>
+                <h3 className="text-4xl font-black text-emerald-900 mb-2">Dream Home</h3>
+             </div>
+             <div className="mt-12">
+                <div className="flex justify-between font-black text-emerald-900 text-xl mb-4">
+                   <span>£4,500 / £40,000</span>
+                </div>
+                <div className="w-full bg-white h-8 rounded-full border-4 border-white shadow-inner overflow-hidden">
+                   <div className="bg-emerald-500 h-full w-[11.25%] transition-all"></div>
+                </div>
+             </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}
