@@ -3,5 +3,6 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
- 
+  provider = "postgresql"
+  // The url and directUrl lines are GONE from here
+}
