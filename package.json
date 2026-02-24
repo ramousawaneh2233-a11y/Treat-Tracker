@@ -8,15 +8,15 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint"
- "dependencies": {
+  },
+  "dependencies": {
     "@prisma/client": "7.4.1",
     "@prisma/adapter-pg": "7.4.1",
     "pg": "latest",
-    "next": "15.2.0", 
+    "next": "15.2.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "lucide-react": "latest"
-  },
   },
   "devDependencies": {
     "prisma": "7.4.1",
