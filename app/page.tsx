@@ -12,8 +12,9 @@ import {
   ArrowUpRight 
 } from "lucide-react";
 
-// ADD THIS LINE RIGHT HERE:
 import ConfettiTrigger from "../components/ConfettiTrigger";
+// 1. IMPORT YOUR NEW INTERACTIVE BUTTON:
+import AddHoursButton from "../components/AddHoursButton";
 
 export default async function ProfessionalDashboard() {
   // --- FINANCIAL CALCULATIONS ---
@@ -35,8 +36,8 @@ export default async function ProfessionalDashboard() {
 
   return (
     <div className="min-h-screen bg-white text-slate-900 font-sans p-4 md:p-8">
-      {/* This now works because of the import above! */}
-     <ConfettiTrigger shouldFire={savingsThisMonth >= 1000} />
+      {/* Fires on load if the monthly goal is met */}
+      <ConfettiTrigger shouldFire={savingsThisMonth >= 1000} />
       
       <div className="max-w-6xl mx-auto">
         
@@ -80,18 +81,11 @@ export default async function ProfessionalDashboard() {
             </div>
           </div>
 
-          <div className="bg-indigo-600 rounded-[2.5rem] p-8 text-white flex flex-col justify-center items-center text-center shadow-xl shadow-indigo-100">
-            <div className="bg-white/20 p-4 rounded-3xl mb-4 backdrop-blur-md">
-              <Sparkles size={40} className="text-white" />
-            </div>
-            <h3 className="font-black text-xl mb-2 italic">Worked Overtime?</h3>
-            <button className="w-full py-4 bg-white text-indigo-600 rounded-2xl font-black text-sm mt-4 hover:scale-105 transition-transform">
-              Add Hours
-            </button>
-          </div>
+          {/* 2. REPLACED STATIC DIV WITH THE NEW INTERACTIVE COMPONENT */}
+          <AddHoursButton />
         </section>
 
-        {/* 2. MILESTONE & MORTGAGE */}
+        {/* 3. MILESTONE & MORTGAGE */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-600 rounded-[3rem] p-1 shadow-2xl">
             <div className="bg-white rounded-[2.9rem] p-10 h-full">
@@ -117,18 +111,4 @@ export default async function ProfessionalDashboard() {
                 </div>
                 <h3 className="text-4xl font-black text-emerald-900 mb-2">Dream Home</h3>
              </div>
-             <div className="mt-12">
-                <div className="flex justify-between font-black text-emerald-900 text-xl mb-4">
-                   <span>£4,500 / £40,000</span>
-                </div>
-                <div className="w-full bg-white h-8 rounded-full border-4 border-white shadow-inner overflow-hidden">
-                   <div className="bg-emerald-500 h-full w-[11.25%] transition-all"></div>
-                </div>
-             </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  );
-}
+             <div className="mt-
