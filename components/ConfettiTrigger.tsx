@@ -3,27 +3,22 @@
 import { useEffect } from "react";
 import confetti from "canvas-confetti";
 
-export default function ConfettiTrigger() {
+interface ConfettiProps {
+  shouldFire?: boolean;
+}
+
+export default function ConfettiTrigger({ shouldFire }: ConfettiProps) {
   useEffect(() => {
-    const duration = 3 * 1000;
-    const animationEnd = Date.now() + duration;
-    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-
-    const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min;
-
-    const interval: any = setInterval(function() {
-      const timeLeft = animationEnd - Date.now();
-
-      if (timeLeft <= 0) {
-        return clearInterval(interval);
-      }
-
-      const particleCount = 50 * (timeLeft / duration);
-      
-      confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
-      confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
-    }, 250);
-  }, []);
+    // Only fire if shouldFire is true
+    if (shouldFire) {
+      confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#ff0000', '#00ff00', '#0000ff'] // You can customize colors!
+      });
+    }
+  }, [shouldFire]); // This makes it "listen" for changes to shouldFire
 
   return null;
 }
