@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@prisma/adapter-pg": "^7.4.1",
     "@prisma/client": "^7.4.1",
     "canvas-confetti": "^1.9.3",
     "lucide-react": "latest",
@@ -27,4 +26,5 @@
     "prisma": "^7.4.1",
     "typescript": "^5"
   }
+}
 }
