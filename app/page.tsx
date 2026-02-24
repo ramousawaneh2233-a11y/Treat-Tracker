@@ -36,7 +36,7 @@ export default async function ProfessionalDashboard() {
   return (
     <div className="min-h-screen bg-white text-slate-900 font-sans p-4 md:p-8">
       {/* This now works because of the import above! */}
-      <ConfettiTrigger />
+     <ConfettiTrigger shouldFire={savingsThisMonth >= 1000} />
       
       <div className="max-w-6xl mx-auto">
         
