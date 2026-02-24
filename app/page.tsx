@@ -1,115 +1,93 @@
 import { db } from "@/lib/db";
-import { Coffee, Pizza, Plane, Calculator, Heart, Sparkles } from "lucide-react";
+import { 
+  Coffee, 
+  Pizza, 
+  Plane, 
+  Calculator, 
+  Heart, 
+  Sparkles, 
+  PartyPopper, 
+  TrendingUp, 
+  Home, 
+  ArrowUpRight 
+} from "lucide-react";
 
 export default async function ProfessionalDashboard() {
-  // --- FINANCIAL CALCULATIONS ---
-  const grossMonthly = 3500; // Example Gross Pay
-  const pensionRate = 0.05; // 5%
+  // --- FINANCIAL CALCULATIONS (The "Professional" Logic) ---
+  const grossMonthly = 3500; // This will eventually come from your database
+  const pensionRate = 0.05;  // 5% pension contribution
   
-  // Simple UK Tax Logic (Estimates)
-  const taxableIncome = grossMonthly - 1048; // Personal allowance monthly
-  const tax = taxableIncome > 0 ? taxableIncome * 0.20 : 0;
-  const ni = grossMonthly > 1048 ? (grossMonthly - 1048) * 0.08 : 0; // New NI rates
+  // UK Tax Logic (Based on 2024/25 tax year estimates)
+  const personalAllowanceMonthly = 1048; 
+  const taxableIncome = Math.max(0, grossMonthly - personalAllowanceMonthly);
+  
+  const tax = taxableIncome * 0.20; // 20% Basic Rate
+  const ni = grossMonthly > 1048 ? (grossMonthly - 1048) * 0.08 : 0; // 8% Class 1 NI
   const pension = grossMonthly * pensionRate;
+  
   const takeHomePay = grossMonthly - tax - ni - pension;
 
-  // --- REWARD LOGIC ---
+  // --- REWARD LOGIC (The "Treat" System) ---
   const savingsThisMonth = 1000;
   const rewardSuggestions = [
-    { icon: <Coffee />, text: "Get a fancy Caramel Latte", type: "Small" },
-    { icon: <Pizza />, text: "Order that extra-large Pizza tonight", type: "Small" },
-    { icon: <Heart />, text: "Buy those flowers you liked", type: "Medium" },
-    { icon: <Plane />, text: "Time to browse flights for a weekend away!", type: "Large" }
+    { icon: <Coffee className="text-orange-500" />, text: "Get a fancy Caramel Latte", type: "Small" },
+    { icon: <Pizza className="text-red-500" />, text: "Order that extra-large Pizza tonight", type: "Small" },
+    { icon: <Heart className="text-pink-500" />, text: "Buy those flowers you liked", type: "Medium" },
+    { icon: <Plane className="text-blue-500" />, text: "Time to browse flights for a weekend away!", type: "Large" }
   ];
-  // Select a reward based on savings
+
+  // Select a reward: If saved > £1000 show Large reward, else show Small
   const suggestedReward = savingsThisMonth >= 1000 ? rewardSuggestions[3] : rewardSuggestions[0];
 
   return (
     <div className="min-h-screen bg-white text-slate-900 font-sans p-4 md:p-8">
       <div className="max-w-6xl mx-auto">
         
-        {/* 1. PAYCHECK DECODER (The "Professional" Part) */}
-        <section className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-10">
-          <div className="lg:col-span-3 bg-slate-900 rounded-[2rem] p-8 text-white flex flex-col justify-between">
-            <div>
-              <h2 className="text-indigo-400 font-black tracking-widest text-xs uppercase mb-2 flex items-center gap-2">
-                <Calculator size={14} /> Monthly Income Breakdown
+        {/* HEADER SECTION */}
+        <header className="flex justify-between items-center mb-10">
+          <h1 className="text-3xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-pink-500">
+            TREAT TRACKER PRO
+          </h1>
+          <div className="bg-slate-100 px-4 py-2 rounded-full flex items-center gap-2">
+            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            <span className="text-xs font-black uppercase text-slate-600 tracking-widest">Live Budget Sync</span>
+          </div>
+        </header>
+
+        {/* 1. PAYCHECK DECODER */}
+        <section className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-10">
+          <div className="lg:col-span-3 bg-slate-900 rounded-[2.5rem] p-10 text-white shadow-2xl relative overflow-hidden">
+            <div className="relative z-10">
+              <h2 className="text-indigo-400 font-black tracking-widest text-xs uppercase mb-4 flex items-center gap-2">
+                <Calculator size={16} /> Monthly Income Breakdown
               </h2>
-              <div className="flex items-baseline gap-4">
-                <span className="text-5xl font-black">£{takeHomePay.toFixed(2)}</span>
-                <span className="text-slate-400 font-bold line-through">£{grossMonthly}</span>
+              <div className="flex items-baseline gap-4 mb-2">
+                <span className="text-6xl font-black tracking-tighter">£{takeHomePay.toLocaleString(undefined, {minimumFractionDigits: 2})}</span>
+                <span className="text-slate-500 font-bold line-through text-2xl">£{grossMonthly}</span>
               </div>
+              <p className="text-slate-400 font-medium">Actual money landing in your pocket</p>
             </div>
 
-            <div className="grid grid-cols-3 gap-4 mt-8 pt-8 border-t border-slate-800">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10 pt-10 border-t border-slate-800 relative z-10">
               <div>
-                <p className="text-slate-500 text-xs font-bold uppercase">Income Tax</p>
-                <p className="text-pink-500 font-black">-£{tax.toFixed(2)}</p>
-              </div>
-              <div>
-                <p className="text-slate-500 text-xs font-bold uppercase">Nat. Insurance</p>
-                <p className="text-pink-500 font-black">-£{ni.toFixed(2)}</p>
+                <p className="text-slate-500 text-xs font-black uppercase tracking-widest mb-1">Income Tax</p>
+                <p className="text-pink-500 text-2xl font-black">-£{tax.toFixed(2)}</p>
               </div>
               <div>
-                <p className="text-slate-500 text-xs font-bold uppercase">Pension (5%)</p>
-                <p className="text-indigo-400 font-black">-£{pension.toFixed(2)}</p>
+                <p className="text-slate-500 text-xs font-black uppercase tracking-widest mb-1">National Insurance</p>
+                <p className="text-pink-500 text-2xl font-black">-£{ni.toFixed(2)}</p>
+              </div>
+              <div>
+                <p className="text-slate-500 text-xs font-black uppercase tracking-widest mb-1">Pension Contribution</p>
+                <p className="text-indigo-400 text-2xl font-black">-£{pension.toFixed(2)}</p>
               </div>
             </div>
+            {/* Background Decoration */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-600/10 blur-[100px] rounded-full"></div>
           </div>
 
-          {/* OVERTIME CARD */}
-          <div className="bg-indigo-50 rounded-[2rem] p-8 border-2 border-indigo-100 flex flex-col justify-center items-center text-center">
-            <div className="bg-white p-4 rounded-full shadow-sm text-indigo-600 mb-4">
-              <Sparkles size={32} />
+          {/* OVERTIME / QUICK ADD */}
+          <div className="bg-indigo-600 rounded-[2.5rem] p-8 text-white flex flex-col justify-center items-center text-center shadow-xl shadow-indigo-100">
+            <div className="bg-white/20 p-4 rounded-3xl mb-4 backdrop-blur-md">
+              <Sparkles size={40} className="text-white" />
             </div>
-            <h3 className="font-black text-slate-800">Overtime?</h3>
-            <p className="text-slate-500 text-sm mb-4">Log extra hours to boost your treats</p>
-            <button className="w-full py-3 bg-indigo-600 text-white rounded-2xl font-black text-sm">Add Hours</button>
-          </div>
-        </section>
-
-        {/* 2. THE POSITIVE REINFORCEMENT (The "Beautiful" Part) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          
-          <div className="bg-gradient-to-br from-pink-500 to-orange-400 rounded-[2.5rem] p-1 text-white shadow-xl shadow-pink-200">
-            <div className="bg-white rounded-[2.4rem] p-10 h-full text-slate-900">
-              <div className="flex items-center gap-2 text-pink-500 font-black uppercase tracking-tighter mb-4">
-                <PartyPopper size={20} /> Milestone Achieved!
-              </div>
-              <h3 className="text-4xl font-black leading-tight mb-6 italic">
-                "You've been amazing this month..."
-              </h3>
-              
-              <div className="bg-slate-50 rounded-3xl p-6 border border-slate-100 flex items-center gap-6">
-                <div className="text-4xl bg-white p-4 rounded-2xl shadow-sm">
-                   {suggestedReward.icon}
-                </div>
-                <div>
-                  <p className="font-black text-xl text-slate-800">{suggestedReward.text}</p>
-                  <p className="text-slate-500 text-sm font-bold">Treat yourself, you've earned it!</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-emerald-50 rounded-[2.5rem] p-10 border-2 border-emerald-100 flex flex-col justify-between">
-             <div>
-                <h3 className="text-2xl font-black text-emerald-900 mb-2">Mortgage Pot</h3>
-                <p className="text-emerald-700 font-medium">Securely tucked away for your future home.</p>
-             </div>
-             <div className="mt-10">
-                <div className="flex justify-between font-black text-emerald-900 text-lg mb-2">
-                   <span>Progress</span>
-                   <span>£4,500 / £40k</span>
-                </div>
-                <div className="w-full bg-white h-4 rounded-full border border-emerald-200 overflow-hidden">
-                   <div className="bg-emerald-500 h-full w-[12%]"></div>
-                </div>
-             </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  );
-}
