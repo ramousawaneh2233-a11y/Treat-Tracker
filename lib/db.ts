@@ -3,13 +3,8 @@ import { PrismaPg } from '@prisma/adapter-pg';
 import pg from 'pg';
 
 const prismaClientSingleton = () => {
-  // 1. Create a connection pool to Supabase
   const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
-  
-  // 2. Wrap it in the Prisma Driver Adapter
   const adapter = new PrismaPg(pool);
-  
-  // 3. Pass the adapter to the Client (This fixes the "InitializationError")
   return new PrismaClient({ adapter });
 };
 
