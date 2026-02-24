@@ -11,7 +11,8 @@ import {
   Home, 
   ArrowUpRight 
 } from "lucide-react";
-// THIS IS THE MISSING LINE:
+
+// ADD THIS LINE RIGHT HERE:
 import ConfettiTrigger from "../components/ConfettiTrigger";
 
 export default async function ProfessionalDashboard() {
@@ -34,7 +35,9 @@ export default async function ProfessionalDashboard() {
 
   return (
     <div className="min-h-screen bg-white text-slate-900 font-sans p-4 md:p-8">
+      {/* This now works because of the import above! */}
       <ConfettiTrigger />
+      
       <div className="max-w-6xl mx-auto">
         
         {/* HEADER */}
