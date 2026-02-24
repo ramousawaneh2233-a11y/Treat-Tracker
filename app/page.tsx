@@ -11,8 +11,6 @@ import {
   Home, 
   ArrowUpRight 
 } from "lucide-react";
-import ConfettiTrigger from "@/components/ConfettiTrigger";
-
 export default async function ProfessionalDashboard() {
   // --- FINANCIAL CALCULATIONS ---
   const grossMonthly = 3500; 
