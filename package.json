@@ -1,2 +1,17 @@
-"prisma": "^5.22.0",
-"@prisma/client": "^5.22.0"
+{
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "next": "16.1.6",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "prisma": "^5.22.0",
+    "typescript": "^5"
+  },
+  "scripts": {
+    "build": "prisma generate && next build",
+    "dev": "next dev",
+    "start": "next start"
+  }
+}
