@@ -5,7 +5,6 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -18,7 +17,7 @@ model User {
 model Treat {
   id          String   @id @default(cuid())
   name        String
-  calories    Int?     // This is our "Amount" field
+  calories    Int?     
   createdAt   DateTime @default(now())
   userId      String
   user        User     @relation(fields: [userId], references: [id])
