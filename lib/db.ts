@@ -3,7 +3,7 @@ import { PrismaPg } from '@prisma/adapter-pg';
 import pg from 'pg';
 
 const prismaClientSingleton = () => {
-  // This connects to your DATABASE_URL from Vercel env variables
+  // This uses your DATABASE_URL from Vercel
   const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
   const adapter = new PrismaPg(pool);
   
