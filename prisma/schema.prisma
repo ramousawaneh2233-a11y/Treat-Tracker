@@ -1,15 +1,24 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
 model User {
-  id           String        @id @default(cuid())
-  email        String        @unique
-  name         String?
-  // We'll call the relation 'expenses' but it points to the 'Treat' table
-  expenses     Treat[] 
+  id       String   @id @default(cuid())
+  email    String   @unique
+  name     String?
+  expenses Treat[] 
 }
 
 model Treat {
   id          String   @id @default(cuid())
-  name        String   // e.g., "Netflix", "Groceries"
-  calories    Int?     // We'll use this column for "Amount" (Pence/Cents)
+  name        String
+  calories    Int?     // This is our "Amount" field
   createdAt   DateTime @default(now())
   userId      String
   user        User     @relation(fields: [userId], references: [id])
