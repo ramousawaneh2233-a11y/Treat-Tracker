@@ -1,7 +1,8 @@
-import { defineConfig } from '@prisma/config';
+generator client {
+  provider = "prisma-client-js"
+}
 
-export default defineConfig({
-  datasource: {
-    url: process.env.DATABASE_URL,
-  },
-});
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
